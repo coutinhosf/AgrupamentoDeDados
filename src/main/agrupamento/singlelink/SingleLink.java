@@ -1,6 +1,4 @@
-package SingleLink;
-
-import Entregas.Arquivo;
+package agrupamento.singlelink;
 
 public class SingleLink {
 

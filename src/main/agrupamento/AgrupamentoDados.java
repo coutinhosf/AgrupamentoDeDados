@@ -1,4 +1,6 @@
-import Entregas.Arquivo;
+package agrupamento;
+
+import agrupamento.comum.Arquivo;
 
 import java.util.Scanner;
 
@@ -14,19 +16,14 @@ public class AgrupamentoDados {
         Arquivo file;
         Scanner entrada = new Scanner(System.in);
 
-        System.out.println("----- Agrupamento De Entregas.Dados ----- Entrega03 -----");
-        System.out.print("Nome Entregas.Arquivo CSV: ");
-        nomeArquivo =  entrada.nextLine();
-        System.out.print("Entregas.Distancia:\n 1 - Euclidiana \n 2 - Manhattan \n Digite o Numero:  ");
-        distancia =  entrada.nextLine();
+        nomeArquivo =  "iris";
 /*
         System.out.println("Total de Interações:");
         interacoes =  entrada.nextLine();
         System.out.println("Total de pontos K:");
         pontosK =  entrada.nextLine();
 */
-        file = new Arquivo(nomeArquivo,distancia,"10","5");
-        System.out.println(file.diretorio);
+        file = new Arquivo(nomeArquivo, "1","100","5");
 
         file.leituraArquivo();
         file.salvaNovoArquivo();
