@@ -122,7 +122,7 @@ public class Arquivo {
         FileWriter arquivoDistancia;
         FileWriter arquivoSingleLink;
         try {
-            arquivo = new FileWriter(new File("").getAbsolutePath() + "\\" + "ArquivoSemFaltantes.csv");
+            arquivo = new FileWriter(new File("").getAbsolutePath() + File.separator + "ArquivoSemFaltantes.csv");
             arquivo.write(retornaStringItensFaltantes());
             arquivo.close();
 
