@@ -1,6 +1,5 @@
 package agrupamento.comum;
 
-import agrupamento.testkmeans.KMeans;
 import agrupamento.singlelink.SingleLink;
 
 import java.io.*;
@@ -15,17 +14,14 @@ public class Arquivo {
     public int distancia;
     public int totalInteracao;
     public int pontosK;
-    private Map<Integer, Coluna> mapaDadosArquivos;
+    private Map<Integer, Coluna> dadosArquivo;
     private int totalColunas;
 
-    public Arquivo(String nomeArquivo, String distancia, String totalInteracao, String pontosK) {
+    public Arquivo(String nomeArquivo) {
 
         this.nomeArquivo = nomeArquivo;
         this.diretorio = new File("").getAbsolutePath() + "/" + nomeArquivo + ".csv";
         this.totalColunas = 0;
-        this.distancia = Integer.parseInt(distancia);
-        this.totalInteracao = Integer.parseInt(totalInteracao);
-        this.pontosK = Integer.parseInt(pontosK);
     }
 
     public void leituraArquivo() {
@@ -56,29 +52,29 @@ public class Arquivo {
     private void mapeaCabecalho(String[] cabecalho) {
         Coluna cabecalhoColunas;
         this.totalColunas = cabecalho.length;
-        this.mapaDadosArquivos = new HashMap<Integer, Coluna>();
+        this.dadosArquivo = new HashMap<Integer, Coluna>();
         for (int i = 0; i < cabecalho.length; i++) {
             cabecalhoColunas = new Coluna(cabecalho[i]);
-            this.mapaDadosArquivos.put(i, cabecalhoColunas);
-            this.mapaDadosArquivos.get(i).valores = new ArrayList<>();
+            this.dadosArquivo.put(i, cabecalhoColunas);
+            this.dadosArquivo.get(i).valores = new ArrayList<>();
         }
     }
 
     private void lerTodasColunas(String[] colunas) {
         for (int i = 0; i < colunas.length; i++) {
 
-            if (colunas[i].contains("?") && this.mapaDadosArquivos.get(i).possuiVazio == false) {
-                this.mapaDadosArquivos.get(i).valores.add(colunas[i]);
+            if (colunas[i].contains("?") && this.dadosArquivo.get(i).possuiVazio == false) {
+                this.dadosArquivo.get(i).valores.add(colunas[i]);
                 temVazio(i);
-            } else if (colunas[i].contains("?") && this.mapaDadosArquivos.get(i).possuiVazio == true) {
-                this.mapaDadosArquivos.get(i).valores.add(colunas[i]);
+            } else if (colunas[i].contains("?") && this.dadosArquivo.get(i).possuiVazio == true) {
+                this.dadosArquivo.get(i).valores.add(colunas[i]);
                 temVazio(i);
-            } else if (this.mapaDadosArquivos.get(i).possuiVazio == false) {
-                this.mapaDadosArquivos.get(i).valores.add(colunas[i]);
-                if (this.mapaDadosArquivos.get(i).tipoDado.contains("null"))
+            } else if (this.dadosArquivo.get(i).possuiVazio == false) {
+                this.dadosArquivo.get(i).valores.add(colunas[i]);
+                if (this.dadosArquivo.get(i).tipoDado.contains("null"))
                     atribuirTipoAoDado(retiraAspas(colunas[i]), i);
-            } else if (this.mapaDadosArquivos.get(i).possuiVazio == true) {
-                this.mapaDadosArquivos.get(i).valores.add(colunas[i]);
+            } else if (this.dadosArquivo.get(i).possuiVazio == true) {
+                this.dadosArquivo.get(i).valores.add(colunas[i]);
                 atribuirTipoAoDado(retiraAspas(colunas[i]), i);
             }
         }
@@ -86,24 +82,24 @@ public class Arquivo {
     }
 
     private void temVazio(int i) {
-        this.mapaDadosArquivos.get(i).possuiVazio = true;
+        this.dadosArquivo.get(i).possuiVazio = true;
     }
 
     private void atribuirTipoAoDado(String dado, int i) {
         if (dado.trim().matches("^[ A-Za-z-_]+$"))
-            this.mapaDadosArquivos.get(i).tipoDado = "String";
+            this.dadosArquivo.get(i).tipoDado = "String";
         else if (dado.contains("."))
-            this.mapaDadosArquivos.get(i).tipoDado = "Double";
+            this.dadosArquivo.get(i).tipoDado = "Double";
         else
-            this.mapaDadosArquivos.get(i).tipoDado = "Inteiro";
+            this.dadosArquivo.get(i).tipoDado = "Inteiro";
     }
 
-    public Map<Integer, Coluna> getMapaDadosArquivos() {
-        return mapaDadosArquivos;
+    public Map<Integer, Coluna> getDadosArquivo() {
+        return dadosArquivo;
     }
 
-    public void setMapaDadosArquivos(Map<Integer, Coluna> mapaDadosArquivos) {
-        this.mapaDadosArquivos = mapaDadosArquivos;
+    public void setDadosArquivo(Map<Integer, Coluna> dadosArquivo) {
+        this.dadosArquivo = dadosArquivo;
     }
 
     public String retiraAspas(String palavra) {
@@ -130,7 +126,7 @@ public class Arquivo {
 //            arquivoDistancia.write(retornaStringTodosPares(this.distancia));
 //            arquivoDistancia.close();
 
-            retornaKmeans(this);
+//            retornaKmeans(this);
 //            arquivoSingleLink = new FileWriter(new File("").getAbsolutePath()+"\\"+"main.java.SingleLink.txt");
 //            arquivoSingleLink.write(retornaSingleLink(this.distancia));
 //            arquivoSingleLink.close();
@@ -144,9 +140,9 @@ public class Arquivo {
 
     private void colocaFaltantes() {
         //ColocaPosicoesFaltantes
-        for (int i = 0; i < this.mapaDadosArquivos.size(); i++) {
-            if (this.mapaDadosArquivos.get(i).possuiVazio == true)
-                this.mapaDadosArquivos.get(i).ItemFaltante();
+        for (int i = 0; i < this.dadosArquivo.size(); i++) {
+            if (this.dadosArquivo.get(i).possuiVazio == true)
+                this.dadosArquivo.get(i).ItemFaltante();
         }
 
     }
@@ -161,9 +157,9 @@ public class Arquivo {
         int totalItensLista = 0;
 
         for (int i = 0; i < this.totalColunas; i++)
-            cabecalho += this.mapaDadosArquivos.get(i).nome + ",";
+            cabecalho += this.dadosArquivo.get(i).nome + ",";
 
-        totalItensLista = this.mapaDadosArquivos.get(0).valores.size();
+        totalItensLista = this.dadosArquivo.get(0).valores.size();
         cabecalho.substring(0, cabecalho.length() - 1);
 
         cabecalho += "\n";
@@ -172,10 +168,10 @@ public class Arquivo {
             linha = "";
             for (int k = 0; k < this.totalColunas; k++) {
 
-                if (!(this.mapaDadosArquivos.get(k).valores.get(i).contains("?")))
-                    linha += this.mapaDadosArquivos.get(k).valores.get(i) + ",";
+                if (!(this.dadosArquivo.get(k).valores.get(i).contains("?")))
+                    linha += this.dadosArquivo.get(k).valores.get(i) + ",";
                 else
-                    linha += this.mapaDadosArquivos.get(k).itemFaltante + ",";
+                    linha += this.dadosArquivo.get(k).itemFaltante + ",";
             }
             linhas += linha.substring(0, linha.length() - 1) + "\n";
         }
@@ -187,7 +183,7 @@ public class Arquivo {
         String linha;
         String linhas = "";
         Distancia calculo = new Distancia();
-        double[][] matrizDistancia = calculo.calculaTodosPares(this.mapaDadosArquivos, distancia);
+        double[][] matrizDistancia = calculo.calculaTodosPares(this.dadosArquivo, distancia);
 
         for (int i = 0; i < matrizDistancia.length; i++) {
             linha = "";
@@ -200,24 +196,9 @@ public class Arquivo {
         return linhas;
     }
 
-    private String retornaKmeans(Arquivo arquivo) {
-        KMeans kmeansAlgoritmo = new KMeans(arquivo.pontosK, arquivo.totalInteracao);
-
-        Map<Integer, Coluna> projecaoArquivo = selecionarColunasNumericas(arquivo);
-        kmeansAlgoritmo.executa(projecaoArquivo);
-
-        for (int i = 0; i < kmeansAlgoritmo.centroides.size(); i++) {
-            System.out.println("Centroide: " + i);
-            for (int j = 0; j < kmeansAlgoritmo.centroides.get(i).indicesDosObjetos.size(); j++)
-                System.out.print(kmeansAlgoritmo.centroides.get(i).indicesDosObjetos.get(j) + ", ");
-            System.out.println("\n");
-        }
-        return "";
-    }
-
-    private Map<Integer, Coluna> selecionarColunasNumericas(Arquivo arquivo) {
+    public Map<Integer, Coluna> selecionarColunasNumericas() {
         Map<Integer, Coluna> projecao = new HashMap<Integer, Coluna>();
-        for (Map.Entry<Integer, Coluna> entradaMapa : arquivo.mapaDadosArquivos.entrySet()) {
+        for (Map.Entry<Integer, Coluna> entradaMapa : dadosArquivo.entrySet()) {
             if (!entradaMapa.getValue().tipoDado.contains("String"))
                 projecao.put(entradaMapa.getKey(), entradaMapa.getValue());
         }
@@ -227,7 +208,7 @@ public class Arquivo {
     private String retornaSingleLink(int distancia) {
         SingleLink algoritmoSinlgeLink;
         Distancia calculo = new Distancia();
-        double[][] matrizDistancia = calculo.calculaTodosPares(this.mapaDadosArquivos, distancia);
+        double[][] matrizDistancia = calculo.calculaTodosPares(dadosArquivo, distancia);
         algoritmoSinlgeLink = new SingleLink(matrizDistancia);
 
 
