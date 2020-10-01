@@ -11,14 +11,10 @@ public class Arquivo {
 
     private String nomeArquivo;
     public String diretorio;
-    public int distancia;
-    public int totalInteracao;
-    public int pontosK;
     private Map<Integer, Coluna> dadosArquivo;
     private int totalColunas;
 
     public Arquivo(String nomeArquivo) {
-
         this.nomeArquivo = nomeArquivo;
         this.diretorio = new File("").getAbsolutePath() + "/" + nomeArquivo + ".csv";
         this.totalColunas = 0;

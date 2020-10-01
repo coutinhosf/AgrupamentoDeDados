@@ -1,4 +1,4 @@
-package agrupamento.testkmeans;
+package agrupamento.kmeans;
 
 import agrupamento.comum.Distancia;
 import agrupamento.comum.Coluna;

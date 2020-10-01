@@ -2,11 +2,10 @@ package agrupamento;
 
 import agrupamento.comum.Arquivo;
 import agrupamento.comum.Coluna;
-import agrupamento.testkmeans.Centroide;
-import agrupamento.testkmeans.KMeans;
+import agrupamento.kmeans.Centroide;
+import agrupamento.kmeans.KMeans;
 
 import java.util.Map;
-import java.util.Scanner;
 
 
 public class AgrupamentoDados {
@@ -23,10 +22,11 @@ public class AgrupamentoDados {
 
         // imprime centroides
         for (int i = 0; i < resultadoKMeans.size(); i++) {
-            System.out.println("Centroide: " + i);
-            for (int j = 0; j < resultadoKMeans.get(i).indicesDosObjetos.size(); j++)
-                System.out.print(resultadoKMeans.get(i).indicesDosObjetos.get(j) + ", ");
-            System.out.println("\n");
+            System.out.println(resultadoKMeans.get(i).toString());
+//            System.out.println("Centroide: " + i);
+//            for (int j = 0; j < resultadoKMeans.get(i).indicesDosObjetos.size(); j++)
+//                System.out.print(resultadoKMeans.get(i).indicesDosObjetos.get(j) + ", ");
+//            System.out.println("\n");
         }
     }
 

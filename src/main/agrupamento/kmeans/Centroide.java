@@ -1,11 +1,8 @@
-package agrupamento.testkmeans;
+package agrupamento.kmeans;
 
 import agrupamento.comum.Coluna;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class Centroide {
@@ -16,8 +13,20 @@ public class Centroide {
 
     public List<Integer> indicesDosObjetos;
 
+    @Override
+    public String toString() {
+        return "Centroide (" + id + "), Indices=" + indicesDosObjetos.toString();
+    }
+
     public Centroide() {
         this.id = 0;
+        this.indicesDosObjetos = new ArrayList<>();
+        this.objetosAtual = new ArrayList<>();
+        this.objetosAnterior = new ArrayList<>();
+    }
+
+    public Centroide(Integer id) {
+        this.id = id;
         this.indicesDosObjetos = new ArrayList<>();
         this.objetosAtual = new ArrayList<>();
         this.objetosAnterior = new ArrayList<>();
@@ -32,7 +41,7 @@ public class Centroide {
         Map<Integer, Centroide> grupoK = new HashMap<Integer, Centroide>();
 
         for (int i = 0; i < k; i++) {
-            gpK = new Centroide();
+            gpK = new Centroide(i);
             grupoK.put(i, gpK);
         }
 
