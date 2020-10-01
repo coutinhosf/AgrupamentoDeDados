@@ -2,6 +2,7 @@ package agrupamento.kmeans;
 
 import agrupamento.comum.Distancia;
 import agrupamento.comum.Coluna;
+import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +39,11 @@ public class KMeans {
     private void inicializaCentroides(Map<Integer, Coluna> dadosMap) {
         for (int centroideId = 0; centroideId < centroides.size(); centroideId++) {
             centroides.get(centroideId).objetosAtual = retornaObjetosDoCentroideInicial(dadosMap, centroideId);
+            System.out.println(centroides.get(centroideId).objetosAtual);
         }
     }
 
     private void recalculaCentroide(Map<Integer, Coluna> dadosMap) {
-
         for (int k = 0; k < centroides.size(); k++) {
             centroides.get(k).objetosAnterior = centroides.get(k).objetosAtual;
             centroides.get(k).objetosAtual = new ArrayList<>();

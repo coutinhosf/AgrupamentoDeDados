@@ -32,7 +32,7 @@ public class Centroide {
         this.objetosAnterior = new ArrayList<>();
     }
 
-    public Integer retornaCentroideInicial(Integer numeroMaximoDeObjetos) {
+    public static Integer retornaCentroideInicial(Integer numeroMaximoDeObjetos) {
         return (new Double (Math.random() * numeroMaximoDeObjetos)).intValue();
     }
 
@@ -53,8 +53,9 @@ public class Centroide {
         Integer numeroSorteado = retornaCentroideInicial(numeroObjetos);
 
         // atribui objetos ao centroide
-        for (int j = 0; j < dadosMap.size(); j++)
+        for (int j = 0; j < dadosMap.size(); j++) {
             this.objetosAtual.add(dadosMap.get(j).valores.get(numeroSorteado));
+        }
 
         return this.objetosAtual;
     }

@@ -13,7 +13,6 @@ import java.util.List;
 public class DistanciaTest extends JUnitTestRunner {
     Distancia distancia;
 
-
     @Before
     public void startup() {
         distancia = new Distancia();
