@@ -10,19 +10,8 @@ import java.util.*;
 
 public class AgrupamentoDadosPureza {
 
-    public static Map<String, Integer> contarFrequencias(List<String> list) {
-        // hashmap to store the frequency of element
-        Map<String, Integer> hm = new HashMap<String, Integer>();
-
-        for (String i : list) {
-            Integer j = hm.get(i);
-            hm.put(i, (j == null) ? 1 : j + 1);
-        }
-
-        return hm;
-    }
-
     public static void main(String[] args) {
+        // Nome do arquivo para usar como input
         String nomeArquivo = "iris";
 
         Arquivo file = new Arquivo(nomeArquivo);
@@ -34,10 +23,9 @@ public class AgrupamentoDadosPureza {
         // selecionar apenas colunas de classe do arquivo
         Map<String, Integer> classes = file.selecionarColunasClasse();
 
-        Map<Integer, Centroide> resultadoKMeansK3 = AgrupamentoDadosPureza.KMeans(dadosArquivo, 1, 10, 3);
-        Map<Integer, Centroide> resultadoKMeansK4 = AgrupamentoDadosPureza.KMeans(dadosArquivo, 1, 10, 4);
-        Map<Integer, Centroide> resultadoKMeansK5 = AgrupamentoDadosPureza.KMeans(dadosArquivo, 1, 10, 5);
-//        System.out.println(classes);
+        Map<Integer, Centroide> resultadoKMeansK3 = AgrupamentoDadosPureza.KMeans(dadosArquivo, 1, 10, 2);
+        Map<Integer, Centroide> resultadoKMeansK4 = AgrupamentoDadosPureza.KMeans(dadosArquivo, 1, 10, 3);
+        Map<Integer, Centroide> resultadoKMeansK5 = AgrupamentoDadosPureza.KMeans(dadosArquivo, 1, 10, 4);
 
         List<String> valoresDeClassesComIndice = valoresDeClasses(file);
         pureza(resultadoKMeansK3, valoresDeClassesComIndice);
@@ -60,6 +48,8 @@ public class AgrupamentoDadosPureza {
     private static void pureza(Map<Integer, Centroide> resultadoKMeans, List<String> valoresDeClassesComIndice) {
         System.out.println("------------------------------------------------");
         System.out.println("Pureza para k=" + resultadoKMeans.values().size() + "\n");
+
+        Double purezaTotal = 0.0;
         for (Centroide c : resultadoKMeans.values()) {
             List<String> cclasses = new ArrayList<String>();
             System.out.println("Cluster(" + c.id + "): " + c.indicesDosObjetos.size() + " elementos");
@@ -76,14 +66,16 @@ public class AgrupamentoDadosPureza {
                     nomeMaior = clfq.getKey();
                 }
             }
-//          System.out.println(nomeMaior + " " + maior);
-            for (Map.Entry<String, Integer> clfq : frequencias.entrySet()) {
-                System.out.println(clfq.getKey() + ": " + new Double(clfq.getValue()) / c.indicesDosObjetos.size());
-            }
+            purezaTotal += (new Double(maior) / c.indicesDosObjetos.size());
+            System.out.println(nomeMaior + ": " + (new Double(maior) / c.indicesDosObjetos.size()));
             System.out.println();
-
+//            for (Map.Entry<String, Integer> clfq : frequencias.entrySet()) {
+//                System.out.println(clfq.getKey() + ": " + new Double(clfq.getValue()) / c.indicesDosObjetos.size());
+//            }
         }
 
+        System.out.println("Pureza total=" + (new Double(purezaTotal) / resultadoKMeans.size()));
+        System.out.println("");
         // imprime centroides
         for (int i = 0; i < resultadoKMeans.size(); i++)
             System.out.println(resultadoKMeans.get(i).toString());
@@ -95,5 +87,18 @@ public class AgrupamentoDadosPureza {
         kmeansAlgoritmo.executa(dadosArquivo);
         return kmeansAlgoritmo.centroides;
     }
+
+    public static Map<String, Integer> contarFrequencias(List<String> list) {
+        // hashmap to store the frequency of element
+        Map<String, Integer> hm = new HashMap<String, Integer>();
+
+        for (String i : list) {
+            Integer j = hm.get(i);
+            hm.put(i, (j == null) ? 1 : j + 1);
+        }
+
+        return hm;
+    }
+
 
 }
