@@ -8,14 +8,16 @@ import java.util.*;
 public class Centroide {
 
     public int id;
+    public int indiceDoObjetoInicialVirtual;
     public List<String> objetosAtual;
     public List<String> objetosAnterior;
 
     public List<Integer> indicesDosObjetos;
+    Random generator;
 
     @Override
     public String toString() {
-        return "Centroide (" + id + "), Indices=" + indicesDosObjetos.toString();
+        return "Centroide(" + id + "), PI: " + indiceDoObjetoInicialVirtual + ", Indices=" + indicesDosObjetos.toString();
     }
 
     public Centroide() {
@@ -23,6 +25,7 @@ public class Centroide {
         this.indicesDosObjetos = new ArrayList<>();
         this.objetosAtual = new ArrayList<>();
         this.objetosAnterior = new ArrayList<>();
+
     }
 
     public Centroide(Integer id) {
@@ -30,10 +33,6 @@ public class Centroide {
         this.indicesDosObjetos = new ArrayList<>();
         this.objetosAtual = new ArrayList<>();
         this.objetosAnterior = new ArrayList<>();
-    }
-
-    public static Integer retornaCentroideInicial(Integer numeroMaximoDeObjetos) {
-        return (new Double (Math.random() * numeroMaximoDeObjetos)).intValue();
     }
 
     public Map<Integer, Centroide> retornaMapGrupo(int k) {
@@ -48,28 +47,27 @@ public class Centroide {
         return grupoK;
     }
 
-    public List<String> retornaObjetosDoCentroideInicial(Map<Integer, Coluna> dadosMap, Integer numeroObjetos) {
-        // sorteia um numero para o centroide inicial
-        Integer numeroSorteado = retornaCentroideInicial(numeroObjetos);
+    public List<String> retornaObjetosDoCentroideInicial(Map<Integer, Coluna> dadosMap, Integer indiceObjeto) {
+        indiceDoObjetoInicialVirtual = indiceObjeto;
 
-        // atribui objetos ao centroide
+        // adiciona atributos do objeto do indice ao centroide
         for (int j = 0; j < dadosMap.size(); j++) {
-            this.objetosAtual.add(dadosMap.get(j).valores.get(numeroSorteado));
+            objetosAtual.add(dadosMap.get(j).valores.get(indiceObjeto));
         }
-
-        return this.objetosAtual;
+        return objetosAtual;
     }
 
-    public double retornaMediaColuna(Map<Integer, Coluna> dadosMap, int indiceColuna) {
+    public double retornaMediaColuna(Map<Integer, Coluna> dadosMap, int indiceObjeto) {
         Coluna coluna = new Coluna();
-        List<String> listacoluna = new ArrayList<>();
+        List<String> valoresColuna = new ArrayList<>();
 
-        for (int i = 0; i < this.indicesDosObjetos.size(); i++)
-            listacoluna.add(dadosMap.get(indiceColuna).valores.get(i));
+        for (int i = 0; i < indicesDosObjetos.size(); i++)
+            valoresColuna.add(dadosMap.get(indiceObjeto).valores.get(i));
 
-        coluna.valores = listacoluna;
-
-        return coluna.retornaMediaDouble();
+        coluna.valores = valoresColuna;
+        Double resultado = coluna.retornaMediaDouble();
+//        System.out.println(resultado);
+        return resultado;
     }
 
 

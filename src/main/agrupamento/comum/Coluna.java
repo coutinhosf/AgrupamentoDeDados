@@ -38,15 +38,12 @@ public class Coluna {
         double somatorio = 0.0;
         double total = 0.0;
 
-        for (String itemLista : this.valores) {
-            somatorio += Double.parseDouble(itemLista);
+        for (String item : valores) {
+            somatorio += Double.parseDouble(item);
             total += 1.0;
         }
 
-        if (total > 1.0)
-            return (somatorio / total);
-        else
-            return somatorio;
+        return (somatorio / total);
     }
 
     public String Moda() {

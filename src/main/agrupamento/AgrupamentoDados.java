@@ -18,7 +18,7 @@ public class AgrupamentoDados {
 
         // selecionar apenas solunas numericas do arquivo
         Map<Integer, Coluna> dadosArquivo = file.selecionarColunasNumericas();
-        Map<Integer, Centroide> resultadoKMeans = AgrupamentoDados.KMeans(dadosArquivo,1,10,5);
+        Map<Integer, Centroide> resultadoKMeans = AgrupamentoDados.KMeans(dadosArquivo,1,10,3);
 
         // imprime centroides
         for (int i = 0; i < resultadoKMeans.size(); i++) {
