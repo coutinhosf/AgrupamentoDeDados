@@ -13,6 +13,14 @@ public class Coluna {
 
     public Coluna() { }
 
+    @Override
+    public String toString() {
+        return "Coluna{" +
+                "nome='" + nome + '\'' +
+                ", tipoDado='" + tipoDado + '\'' +
+                '}';
+    }
+
     public Coluna(String nomeColuna) {
         this.nome = nomeColuna;
         this.possuiVazio = false;
@@ -62,7 +70,6 @@ public class Coluna {
     }
 
     public void ItemFaltante() {
-
         if (this.tipoDado.contains("Inteiro"))
             this.itemFaltante = String.valueOf(retornaMediaInteiro());
         if (this.tipoDado.contains("Double"))
@@ -75,6 +82,4 @@ public class Coluna {
         Distancia pares = new Distancia();
         return pares.calculaTodosPares(dadosMap, distancia);
     }
-
-
 }

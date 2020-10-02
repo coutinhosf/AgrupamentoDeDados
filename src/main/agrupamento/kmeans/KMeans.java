@@ -55,7 +55,7 @@ public class KMeans {
             Centroide c = centroides.get(centroideId);
 
             c.objetosAtual = c.retornaObjetosDoCentroideInicial(dadosMap, indicesSorteados.get(centroideId));
-            System.out.println(centroides.get(centroideId) + " " + centroides.get(centroideId).objetosAtual);
+//            System.out.println(centroides.get(centroideId) + " " + centroides.get(centroideId).objetosAtual);
         }
     }
 
@@ -81,7 +81,7 @@ public class KMeans {
             Double distanciaObjetos;
             for (int k = 1; k < centroides.size(); k++) {
                 distanciaObjetos = distancia.calcula(retornaObjetoPorIndice(dadosMap, j), centroides.get(k).objetosAtual, 1);
-                if (distanciaObjetos > distancia.maior) {
+                if (distanciaObjetos < distancia.maior) {
                     distancia.pos = k;
                     distancia.maior = distanciaObjetos;
                 }

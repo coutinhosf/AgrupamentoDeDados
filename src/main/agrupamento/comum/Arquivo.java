@@ -5,6 +5,7 @@ import agrupamento.singlelink.SingleLink;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Arquivo {
@@ -54,6 +55,8 @@ public class Arquivo {
             this.dadosArquivo.put(i, cabecalhoColunas);
             this.dadosArquivo.get(i).valores = new ArrayList<>();
         }
+
+
     }
 
     private void lerTodasColunas(String[] colunas) {
@@ -211,4 +214,22 @@ public class Arquivo {
         return algoritmoSinlgeLink.retornaSingleLink(matrizDistancia);
     }
 
+    public Map<String, Integer> selecionarColunasClasse() {
+        List<String> classes = new ArrayList();
+        Map<String, Integer> classesMap = new HashMap();
+
+        for (Map.Entry<Integer, Coluna> entradaMapa : dadosArquivo.entrySet()) {
+            if (entradaMapa.getValue().tipoDado.contains("String")) {
+                classes = entradaMapa.getValue().valores;
+            }
+        }
+        for (String classe : classes){
+            if (classesMap.containsKey(classe)) {
+                classesMap.put(classe, classesMap.get(classe) + 1);
+            } else {
+                classesMap.put(classe, 1);
+            }
+        }
+        return classesMap;
+    }
 }
